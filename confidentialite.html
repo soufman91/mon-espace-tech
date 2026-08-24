@@ -374,8 +374,8 @@ footer{
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mon Espace Tech">
-<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 <style>
 .pwa-install-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,122,0,.55);background:rgba(255,122,0,.08);color:#fff;border-radius:999px;padding:10px 15px;font:inherit;font-weight:700;cursor:pointer;transition:.25s ease}
 .pwa-install-btn:hover{background:#ff7a00;border-color:#ff7a00;color:#08080a;transform:translateY(-1px)}
@@ -457,11 +457,11 @@ if(tilt&&visual){visual.addEventListener('mousemove',e=>{const r=visual.getBound
 
 
 <script>
-if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js').catch(()=>{}));
+if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js', {updateViaCache:'none'}).catch(()=>{}));
 let pwaPrompt=null;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();pwaPrompt=e;document.querySelectorAll('.pwa-install-btn').forEach(b=>b.style.display='inline-flex')});
 async function installMonEspaceTech(){
-  if(!pwaPrompt){alert("Dans Chrome Android : menu ⋮ puis « Installer l'application » ou « Ajouter à l'écran d'accueil ».");return;}
+  if(!pwaPrompt){alert("Chrome n’a pas encore proposé l’installation. Rechargez la page une fois, puis réessayez. Sur Android : menu ⋮ → Installer l’application.");return;}
   pwaPrompt.prompt(); await pwaPrompt.userChoice; pwaPrompt=null;
 }
 window.addEventListener('appinstalled',()=>document.querySelectorAll('.pwa-install-btn').forEach(b=>b.style.display='none'));
