@@ -369,7 +369,7 @@ footer{
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 <style>
-.pwa-install-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,122,0,.55);background:rgba(255,122,0,.08);color:#fff;border-radius:999px;padding:10px 15px;font:inherit;font-weight:700;cursor:pointer;transition:.25s ease}
+.pwa-install-btn{display:none;align-items:center;gap:8px;border:1px solid rgba(255,122,0,.55);background:rgba(255,122,0,.08);color:#fff;border-radius:999px;padding:10px 15px;font:inherit;font-weight:700;cursor:pointer;transition:.25s ease}
 .pwa-install-btn:hover{background:#ff7a00;border-color:#ff7a00;color:#08080a;transform:translateY(-1px)}
 </style>
 </head><body>
@@ -395,13 +395,47 @@ footer{
 const tilt=document.getElementById('tilt'); const visual=document.querySelector('.visual');
 if(tilt&&visual){visual.addEventListener('mousemove',e=>{const r=visual.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5;const y=(e.clientY-r.top)/r.height-.5;tilt.style.transform=`rotateY(${x*10}deg) rotateX(${-y*10}deg) translateZ(12px) scale(1.02)`});visual.addEventListener('mouseleave',()=>{tilt.style.transform='rotateY(0deg) rotateX(0deg) translateZ(0)'})}</script>
 <script>
-if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js', {updateViaCache:'none'}).catch(()=>{}));
-let pwaPrompt=null;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();pwaPrompt=e;document.querySelectorAll('.pwa-install-btn').forEach(b=>b.style.display='inline-flex')});
-async function installMonEspaceTech(){
-  if(!pwaPrompt){alert("Chrome n’a pas encore proposé l’installation. Rechargez la page une fois, puis réessayez. Sur Android : menu ⋮ → Installer l’application.");return;}
-  pwaPrompt.prompt(); await pwaPrompt.userChoice; pwaPrompt=null;
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js', {updateViaCache:'none'}).catch(() => {});
+  });
 }
-window.addEventListener('appinstalled',()=>document.querySelectorAll('.pwa-install-btn').forEach(b=>b.style.display='none'));
+
+let deferredInstallPrompt = null;
+
+function setInstallButtonVisible(visible) {
+  document.querySelectorAll('.pwa-install-btn').forEach(btn => {
+    btn.style.display = visible ? 'inline-flex' : 'none';
+  });
+}
+
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  setInstallButtonVisible(true);
+});
+
+async function installMonEspaceTech() {
+  if (!deferredInstallPrompt) {
+    setInstallButtonVisible(false);
+    return;
+  }
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+  setInstallButtonVisible(false);
+}
+
+window.addEventListener('appinstalled', () => {
+  deferredInstallPrompt = null;
+  setInstallButtonVisible(false);
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true) {
+    setInstallButtonVisible(false);
+  }
+});
 </script>
 </body></html>
