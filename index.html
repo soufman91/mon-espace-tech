@@ -701,6 +701,138 @@ footer{
 }
 </style>
 
+
+<style>
+/* === VISUEL FUTURISTE EXACT EN HAUT === */
+.top-futuristic-visual{
+  width:min(1180px,92%);
+  margin:18px auto 10px;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.20);
+  box-shadow:0 18px 45px rgba(0,0,0,.28);
+  line-height:0;
+}
+.top-futuristic-visual img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+/* === BANDEAU JUSTE EN DESSOUS === */
+.launch-strip{
+  width:min(1180px,92%);
+  margin:10px auto 32px;
+}
+
+.launch-strip .launch-banner{
+  width:100% !important;
+  min-height:110px;
+  margin:0 !important;
+  padding:22px 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:26px;
+  border-radius:20px;
+
+  /* VRAIMENT TRANSPARENT */
+  background:rgba(255,255,255,.015) !important;
+  border:1px solid rgba(255,255,255,.32) !important;
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.10),
+    inset 0 1px 0 rgba(255,255,255,.12) !important;
+
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
+.launch-strip .launch-banner::after{
+  display:none !important;
+}
+
+.launch-strip .launch-title{
+  color:#fff !important;
+  text-shadow:0 1px 3px rgba(0,0,0,.65);
+}
+
+.launch-strip .launch-subtitle{
+  color:rgba(255,255,255,.78) !important;
+  text-shadow:0 1px 3px rgba(0,0,0,.65);
+}
+
+.launch-strip .launch-months{
+  display:flex;
+  gap:10px;
+  flex:0 0 auto;
+}
+
+.launch-strip .launch-months span{
+  min-width:100px;
+  padding:11px 14px;
+  border-radius:12px;
+  background:rgba(0,0,0,.06) !important;
+  border:1px solid rgba(255,122,0,.62) !important;
+  color:#fff !important;
+  box-shadow:none !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
+@media(max-width:800px){
+  .top-futuristic-visual{
+    width:calc(100% - 20px);
+    border-radius:16px;
+  }
+  .launch-strip{
+    width:calc(100% - 20px);
+  }
+  .launch-strip .launch-banner{
+    flex-direction:column;
+    align-items:stretch;
+    padding:20px;
+  }
+  .launch-strip .launch-months{
+    flex-wrap:wrap;
+  }
+  .launch-strip .launch-months span{
+    flex:1 1 110px;
+  }
+}
+</style>
+
+
+<style>
+/* Correction image haute : pleine largeur du cadre, sans marge interne */
+.top-futuristic-visual{
+  width:min(1180px,92%) !important;
+  margin:18px auto 10px !important;
+  padding:0 !important;
+  border:none !important;
+  box-shadow:none !important;
+  background:transparent !important;
+  overflow:hidden !important;
+  border-radius:22px !important;
+  line-height:0 !important;
+}
+.top-futuristic-visual img{
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  height:auto !important;
+  margin:0 !important;
+  object-fit:cover !important;
+  border-radius:22px !important;
+}
+
+/* Bandeau dessous toujours transparent */
+.launch-strip .launch-banner{
+  background:rgba(255,255,255,.015) !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+</style>
+
 </head><body>
 
 <header><div class="container"><nav>
@@ -710,8 +842,13 @@ footer{
 
 <div class="prelaunch-wrap">
   
-<section class="launch-zone">
-  <div class="launch-banner">
+
+<section class="top-futuristic-visual" aria-label="Mon Espace Tech">
+  <img src="visuel-futuriste-logo.png" alt="Mon Espace Tech - univers futuriste informatique">
+</section>
+
+<section class="launch-strip">
+  <div class="launch-banner launch-banner-clear">
     <div class="launch-copy">
       <span class="launch-dot" aria-hidden="true"></span>
       <div>
@@ -726,6 +863,7 @@ footer{
     </div>
   </div>
 </section>
+
 
 </div>
 <main><div class="container">
